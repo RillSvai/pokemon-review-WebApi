@@ -7,12 +7,15 @@ namespace PokemonReview.DataAccess.Repository
 	{
 		private readonly ApplicationDbContext _db;
 
-        public UnitOfWork(ApplicationDbContext db)
-        {
-            _db = db;
+		public UnitOfWork(ApplicationDbContext db)
+		{
+			_db = db;
 			PokemonRepo = new PokemonRepository(db);
-        }
-        public IPokemonRepository PokemonRepo { get; private set; }	
+			CategoryRepo = new CategoryRepository(db);
+		}
+		public IPokemonRepository PokemonRepo { get; private set; }
+
+		public ICategoryRepository CategoryRepo {get; private set;}
 
 		async public Task Save()
 		{

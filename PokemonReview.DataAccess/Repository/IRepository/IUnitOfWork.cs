@@ -3,7 +3,7 @@
 	public interface IUnitOfWork
 	{
 		IPokemonRepository PokemonRepo { get; }
-
+		ICategoryRepository CategoryRepo { get; }
 		public Task Save();
 	}
 }

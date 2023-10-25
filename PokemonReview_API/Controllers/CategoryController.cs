@@ -1,21 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PokemonReview.Models.Models;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PokemonReview.DataAccess.Repository.IRepository;
-using AutoMapper;
 using PokemonReview.Models.Dto;
+using PokemonReview.Models.Models;
 
 namespace PokemonReview_API.Controllers
 {
 	[ApiController]
 	[Route("api/[controller]")]
-	public class PokemonController : Controller
+	public class CategoryController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
-
-        public PokemonController(IUnitOfWork unitOfWork, IMapper mapper)
+        public CategoryController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;	
 			_mapper = mapper;
         }
 
@@ -24,12 +23,12 @@ namespace PokemonReview_API.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		async public Task<IActionResult> GetAll() 
 		{
-			var pokemons = _mapper.Map<IEnumerable<PokemonDto>>(await _unitOfWork.PokemonRepo.GetAllAsync()); 
+			var categories = _mapper.Map<IEnumerable<CategoryDto>>(await _unitOfWork.CategoryRepo.GetAllAsync());
 			if (!ModelState.IsValid) 
 			{
-				return BadRequest(ModelState);
+				return BadRequest(ModelState);	
 			}
-			return Ok(pokemons);
+			return Ok(categories);
 		}
 		[HttpGet("{id:int}")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Pokemon))]
@@ -37,33 +36,29 @@ namespace PokemonReview_API.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		async public Task<IActionResult> Get(int id) 
 		{
-			if (!await _unitOfWork.PokemonRepo.Exists(id)) 
+			if (!await _unitOfWork.CategoryRepo.Exists(id)) 
 			{
 				return NotFound();
 			}
-			var pokemon = _mapper.Map<PokemonDto>(await _unitOfWork.PokemonRepo.GetAsync(filter: pokemon => pokemon.Id == id));
+			var category = _mapper.Map<CategoryDto>(await _unitOfWork.CategoryRepo.GetAsync(category => category.Id == id));
 			if (!ModelState.IsValid) 
 			{
-				return BadRequest(ModelState); 
+				return BadRequest(ModelState);
 			}
-			return Ok(pokemon);
-        }
-		[HttpGet("{id:int}/rating")]
-		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(double))]
+			return Ok(category);
+		}
+		[HttpGet("pokemons/{categoryId:int}")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Pokemon>))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<IActionResult> GetRating(int id) 
+		async public Task<IActionResult> GetPokemons(int categoryId) 
 		{
-			if (!await _unitOfWork.PokemonRepo.Exists(id)) 
-			{
-				return NotFound();
-			}
-			double rating = _unitOfWork.PokemonRepo.GetRating(id);
+			var pokemons = _mapper.Map<IEnumerable<PokemonDto>>(await _unitOfWork.CategoryRepo.GetPokemons(categoryId));
 			if (!ModelState.IsValid) 
 			{
 				return BadRequest(ModelState);
 			}	
-			return Ok(rating);
+			return Ok(pokemons);
 		}
 	}
 }
