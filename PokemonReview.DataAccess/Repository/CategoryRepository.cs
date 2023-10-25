@@ -24,7 +24,7 @@ namespace PokemonReview.DataAccess.Repository
 
 		public void Update(Category category)
 		{
-			throw new NotImplementedException();
+			_db.Categories.Update(category);
 		}
 	}
 }

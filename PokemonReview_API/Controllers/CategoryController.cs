@@ -8,7 +8,7 @@ namespace PokemonReview_API.Controllers
 {
 	[ApiController]
 	[Route("api/[controller]")]
-	public class CategoryController : Controller
+	public class CategoryController : ControllerBase
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;

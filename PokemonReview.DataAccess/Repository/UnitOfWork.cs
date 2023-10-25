@@ -12,10 +12,15 @@ namespace PokemonReview.DataAccess.Repository
 			_db = db;
 			PokemonRepo = new PokemonRepository(db);
 			CategoryRepo = new CategoryRepository(db);
+			CountryRepo = new CountryRepository(db);
+			OwnerRepo = new OwnerRepository(db);
 		}
 		public IPokemonRepository PokemonRepo { get; private set; }
 
 		public ICategoryRepository CategoryRepo {get; private set;}
+
+		public ICountryRepository CountryRepo {get; private set;}
+		public IOwnerRepository OwnerRepo { get; private set;}
 
 		async public Task Save()
 		{

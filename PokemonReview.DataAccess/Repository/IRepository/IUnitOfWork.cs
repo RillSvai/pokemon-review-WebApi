@@ -4,6 +4,8 @@
 	{
 		IPokemonRepository PokemonRepo { get; }
 		ICategoryRepository CategoryRepo { get; }
+		ICountryRepository CountryRepo { get; }
+		IOwnerRepository OwnerRepo { get; }
 		public Task Save();
 	}
 }
