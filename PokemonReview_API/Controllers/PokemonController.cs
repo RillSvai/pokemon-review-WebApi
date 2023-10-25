@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PokemonReview.Models.Models;
-using PokemonReview_API.Repository.IRepository;
+using PokemonReview.DataAccess.Repository.IRepository;
 
 namespace PokemonReview_API.Controllers
 {

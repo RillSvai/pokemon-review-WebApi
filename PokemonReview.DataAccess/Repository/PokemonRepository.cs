@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PokemonReview.Models.Models;
-using PokemonReview_API.Repository.IRepository;
+using PokemonReview.DataAccess.Repository.IRepository;
 using PokemonReview.DataAccess.Data;
 
-namespace PokemonReview_API.Repository
+namespace PokemonReview.DataAccess.Repository
 {
 	public class PokemonRepository : Repository<Pokemon>, IPokemonRepository
 	{

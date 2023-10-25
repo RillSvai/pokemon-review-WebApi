@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PokemonReview_API.Migrations
+namespace PokemonReview.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreateDbWithAllTables : Migration

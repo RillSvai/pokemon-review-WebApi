@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using PokemonReview.DataAccess.Data;
+using PokemonReview.DataAccess.Repository;
+using PokemonReview.DataAccess.Repository.IRepository;
 using PokemonReview.Utility;
-using PokemonReview_API.Repository;
-using PokemonReview_API.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 

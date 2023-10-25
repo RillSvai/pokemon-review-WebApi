@@ -1,7 +1,7 @@
 ﻿using PokemonReview.DataAccess.Data;
-using PokemonReview_API.Repository.IRepository;
+using PokemonReview.DataAccess.Repository.IRepository;
 
-namespace PokemonReview_API.Repository
+namespace PokemonReview.DataAccess.Repository
 {
 	public class UnitOfWork : IUnitOfWork
 	{

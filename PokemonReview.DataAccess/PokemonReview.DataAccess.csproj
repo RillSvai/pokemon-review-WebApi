@@ -19,9 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="PokemonReview.Models">
-      <HintPath>..\PokemonReview.Models\obj\Debug\net7.0\ref\PokemonReview.Models.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\PokemonReview.Models\PokemonReview.Models.csproj" />
   </ItemGroup>
+
 
 </Project>

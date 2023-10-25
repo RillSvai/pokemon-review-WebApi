@@ -1,6 +1,5 @@
-﻿using PokemonReview.Models.Models;
-
-namespace PokemonReview_API.Dto
+﻿
+namespace PokemonReview.Models.Dto
 {
 	public class PokemonDto
 	{

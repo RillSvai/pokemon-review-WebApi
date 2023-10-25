@@ -1,6 +1,6 @@
 ﻿using PokemonReview.Models.Models;
 
-namespace PokemonReview_API.Repository.IRepository
+namespace PokemonReview.DataAccess.Repository.IRepository
 {
 	public interface IPokemonRepository : IRepository<Pokemon>
 	{

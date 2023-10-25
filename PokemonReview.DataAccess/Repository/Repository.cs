@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PokemonReview.DataAccess.Data;
-using PokemonReview_API.Repository.IRepository;
+using PokemonReview.DataAccess.Repository.IRepository;
 using System.Linq.Expressions;
 
-namespace PokemonReview_API.Repository
+namespace PokemonReview.DataAccess.Repository
 {
 	public class Repository<T> : IRepository<T> where T : class
 	{

@@ -8,7 +8,7 @@ using PokemonReview.DataAccess.Data;
 
 #nullable disable
 
-namespace PokemonReview_API.Migrations
+namespace PokemonReview.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20231024182545_InitialCreateDbWithAllTables")]
