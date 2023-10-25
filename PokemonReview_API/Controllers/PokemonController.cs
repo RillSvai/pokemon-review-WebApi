@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PokemonReview.Models.Models;
 using PokemonReview.DataAccess.Repository.IRepository;
+using AutoMapper;
+using PokemonReview.Models.Dto;
 
 namespace PokemonReview_API.Controllers
 {
@@ -9,9 +11,12 @@ namespace PokemonReview_API.Controllers
 	public class PokemonController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;
-        public PokemonController(IUnitOfWork unitOfWork)
+		private readonly IMapper _mapper;
+
+        public PokemonController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+			_mapper = mapper;
         }
 
 		[HttpGet]
@@ -19,7 +24,7 @@ namespace PokemonReview_API.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		async public Task<IActionResult> GetAll() 
 		{
-			IEnumerable<Pokemon> pokemons = await _unitOfWork.PokemonRepo.GetAllAsync(); 
+			var pokemons = _mapper.Map<List<PokemonDto>>(await _unitOfWork.PokemonRepo.GetAllAsync()); 
 			if (!ModelState.IsValid) 
 			{
 				return BadRequest(ModelState);
@@ -36,7 +41,7 @@ namespace PokemonReview_API.Controllers
 			{
 				return NotFound();
 			}
-			Pokemon? pokemon = await _unitOfWork.PokemonRepo.GetAsync(filter: pokemon => pokemon.Id == id);
+			var pokemon = _mapper.Map<PokemonDto>(await _unitOfWork.PokemonRepo.GetAsync(filter: pokemon => pokemon.Id == id));
 			if (!ModelState.IsValid) 
 			{
 				return BadRequest(ModelState); 
