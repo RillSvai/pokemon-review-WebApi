@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PokemonReview_API.Models;
+using PokemonReview.Models.Models;
 
-namespace PokemonReview_API.Data
+namespace PokemonReview.DataAccess.Data
 {
 	public class ApplicationDbContext : DbContext
 	{

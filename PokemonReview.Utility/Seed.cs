@@ -1,7 +1,8 @@
-﻿using PokemonReview_API.Data;
-using PokemonReview_API.Models;
+﻿
+using PokemonReview.DataAccess.Data;
+using PokemonReview.Models.Models;
 
-namespace PokemonReview_API
+namespace PokemonReview.Utility
 {
 	public class Seed
 	{

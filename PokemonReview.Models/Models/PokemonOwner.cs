@@ -1,4 +1,4 @@
-﻿namespace PokemonReview_API.Models
+﻿namespace PokemonReview.Models.Models
 {
 	public class PokemonOwner
 	{

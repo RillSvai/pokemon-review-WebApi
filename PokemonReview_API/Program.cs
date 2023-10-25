@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using PokemonReview_API;
-using PokemonReview_API.Data;
+using PokemonReview.DataAccess.Data;
+using PokemonReview.Utility;
 using PokemonReview_API.Repository;
 using PokemonReview_API.Repository.IRepository;
 

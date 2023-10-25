@@ -1,4 +1,4 @@
-﻿using PokemonReview_API.Data;
+﻿using PokemonReview.DataAccess.Data;
 using PokemonReview_API.Repository.IRepository;
 
 namespace PokemonReview_API.Repository
