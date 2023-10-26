@@ -6,6 +6,8 @@
 		ICategoryRepository CategoryRepo { get; }
 		ICountryRepository CountryRepo { get; }
 		IOwnerRepository OwnerRepo { get; }
+		IReviewRepository ReviewRepo { get; }
+		IReviewerRepository ReviewerRepo { get; }
 		public Task Save();
 	}
 }

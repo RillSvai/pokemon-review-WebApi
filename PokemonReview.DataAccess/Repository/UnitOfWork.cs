@@ -14,6 +14,8 @@ namespace PokemonReview.DataAccess.Repository
 			CategoryRepo = new CategoryRepository(db);
 			CountryRepo = new CountryRepository(db);
 			OwnerRepo = new OwnerRepository(db);
+			ReviewRepo = new ReviewRepository(db);
+			ReviewerRepo = new ReviewerRepository(db);
 		}
 		public IPokemonRepository PokemonRepo { get; private set; }
 
@@ -21,6 +23,8 @@ namespace PokemonReview.DataAccess.Repository
 
 		public ICountryRepository CountryRepo {get; private set;}
 		public IOwnerRepository OwnerRepo { get; private set;}
+		public IReviewRepository ReviewRepo { get; private set;}
+		public IReviewerRepository ReviewerRepo { get; private set;}
 
 		async public Task Save()
 		{
