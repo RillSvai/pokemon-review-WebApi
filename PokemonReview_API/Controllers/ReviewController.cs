@@ -47,7 +47,7 @@ namespace PokemonReview_API.Controllers
 			}
 			return Ok(review);
 		}
-		[HttpGet("reviewer/{reviewId:int}")]
+		[HttpGet("{reviewId:int}/reviewer")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -64,7 +64,7 @@ namespace PokemonReview_API.Controllers
 			}
 			return Ok(reviewer);
 		}
-		[HttpGet("pokemon/{reviewId:int}")]
+		[HttpGet("{reviewId:int}/pokemon")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -47,7 +47,7 @@ namespace PokemonReview_API.Controllers
 			}
 			return Ok(category);
 		}
-		[HttpGet("pokemons/{categoryId:int}")]
+		[HttpGet("{categoryId:int}/pokemons")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Pokemon>))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]

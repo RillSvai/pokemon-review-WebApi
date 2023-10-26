@@ -49,7 +49,7 @@ namespace PokemonReview_API.Controllers
 			}
 			return Ok(owner);
 		}
-		[HttpGet("country/{ownerId:int}")]
+		[HttpGet("{ownerId:int}/country")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Country))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		async public Task<IActionResult> GetCountry(int ownerId) 
@@ -61,7 +61,7 @@ namespace PokemonReview_API.Controllers
 			}
 			return Ok(country);
 		}
-		[HttpGet("pokemons/{ownerId:int}")]
+		[HttpGet("{ownerId:int}/pokemons")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Pokemon>))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		async public Task<IActionResult> GetPokemons(int ownerId) 

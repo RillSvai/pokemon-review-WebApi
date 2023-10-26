@@ -49,7 +49,7 @@ namespace PokemonReview_API.Controllers
 			}
 			return Ok(country);
 		}
-		[HttpGet("owners/{countryId:int}")]
+		[HttpGet("{countryId:int}/owners")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Owner>))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		async public Task<IActionResult> GetOwners(int countryId) 
