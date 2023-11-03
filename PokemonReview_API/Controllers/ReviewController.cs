@@ -81,5 +81,32 @@ namespace PokemonReview_API.Controllers
 			}
 			return Ok(pokemon);
 		}
+		[HttpPost]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		public async Task<IActionResult> Create([FromQuery] int reviewerId, [FromQuery] int pokemonId, ReviewDto review)
+		{
+			if (review is null || !await _unitOfWork.PokemonRepo.Exists(pokemonId) || (await _unitOfWork.ReviewerRepo.GetAsync(r => r.Id == reviewerId)) is null)
+			{
+				return BadRequest();
+			}
+			Review? duplicate = await _unitOfWork.ReviewRepo.GetAsync(r => r.Title.Trim().ToLower() == review.Title.Trim().ToLower());
+			if (duplicate is not null)
+			{
+				ModelState.AddModelError("", "Entity already exists!");
+				return BadRequest(ModelState);
+			}
+			if (!ModelState.IsValid) 
+			{
+				return BadRequest(ModelState);
+			}
+
+			Review mappedReview = _mapper.Map<Review>(review);
+			mappedReview.PokemonId = pokemonId;
+			mappedReview.ReviewerId = reviewerId;
+			await _unitOfWork.ReviewRepo.InsertAsync(mappedReview);
+			await _unitOfWork.Save();
+			return NoContent();
+		}
 	}
 }

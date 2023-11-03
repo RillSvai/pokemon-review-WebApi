@@ -1,4 +1,5 @@
-﻿using PokemonReview.Models.Models;
+﻿using PokemonReview.Models.CreateDto;
+using PokemonReview.Models.Models;
 
 namespace PokemonReview.DataAccess.Repository.IRepository
 {
@@ -7,5 +8,6 @@ namespace PokemonReview.DataAccess.Repository.IRepository
 		public void Update(Pokemon pokemon);
 		public Task<bool> Exists(int pokemonId);
 		public double GetRating(int pokemonId);
+		public Task InsertPokemon(int ownerId,int categoryId,Pokemon pokemon);
 	}
 }

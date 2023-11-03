@@ -65,5 +65,29 @@ namespace PokemonReview_API.Controllers
 			}	
 			return Ok(rating);
 		}
+		[HttpPost]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		public async Task<IActionResult> Create([FromQuery] int ownerId, [FromQuery] int categoryId, [FromBody] PokemonDto pokemon)
+		{
+			if (pokemon is null || !await _unitOfWork.OwnerRepo.Exists(ownerId) || !await _unitOfWork.CategoryRepo.Exists(categoryId)) 
+			{
+				return BadRequest(ModelState);
+			}
+			Pokemon? duplicate = await _unitOfWork.PokemonRepo.GetAsync(p => p.Name.Trim().ToLower() == pokemon.Name.Trim().ToLower());
+			if (duplicate is not null)
+			{
+				ModelState.AddModelError("", "Entity already exists!");
+				return BadRequest(ModelState);
+			}
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			Pokemon mappedPokemon = _mapper.Map<Pokemon>(pokemon);
+			await _unitOfWork.PokemonRepo.InsertPokemon(ownerId, categoryId, mappedPokemon);
+			await _unitOfWork.Save();
+			return NoContent();
+		}
 	}
 }

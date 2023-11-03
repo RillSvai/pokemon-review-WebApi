@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PokemonReview.DataAccess.Repository.IRepository;
+using PokemonReview.Models.CreateDto;
 using PokemonReview.Models.Dto;
 using PokemonReview.Models.Models;
 
@@ -60,5 +62,53 @@ namespace PokemonReview_API.Controllers
 			}	
 			return Ok(pokemons);
 		}
+		[HttpPost]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        async public Task<IActionResult> Create([FromBody] CategoryCreateDto category)
+		{
+			if (category is null)
+			{
+				return BadRequest(ModelState);
+			}
+			Category? duplicate = await _unitOfWork.CategoryRepo.GetAsync(c => c.Name.Trim().ToLower() == category.Name.Trim().ToLower());
+			if (duplicate is not null) 
+			{
+				ModelState.AddModelError("", $"Entity already exists!");
+				return BadRequest(ModelState);
+			}
+			if (!ModelState.IsValid) 
+			{
+				return BadRequest(ModelState);
+			}
+			Category mappedCategory = _mapper.Map<Category>(category);
+			await _unitOfWork.CategoryRepo.InsertAsync(mappedCategory);
+			await _unitOfWork.Save();
+			return NoContent();
+		}
+		[HttpPut("{id:int}")]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<IActionResult> Update(int id, [FromBody] CategoryDto category)
+		{
+			if (category is null || category.Id != id)
+			{
+				return BadRequest(ModelState);
+			}
+			if (!await _unitOfWork.CategoryRepo.Exists(id))
+			{
+				return NotFound();
+			}
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			Category mappedCategory = _mapper.Map<Category>(category);
+			_unitOfWork.CategoryRepo.Update(mappedCategory);
+			await _unitOfWork.Save();
+			return NoContent();
+		}
+
 	}
 }

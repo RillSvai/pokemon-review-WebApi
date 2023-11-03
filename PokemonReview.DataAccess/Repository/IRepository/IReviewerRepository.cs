@@ -11,6 +11,5 @@ namespace PokemonReview.DataAccess.Repository.IRepository
 	{
 		public void Update(Reviewer reviewer);
 		public Task<IEnumerable<Review>> GetReviews(int reviewerId);
-
 	}
 }

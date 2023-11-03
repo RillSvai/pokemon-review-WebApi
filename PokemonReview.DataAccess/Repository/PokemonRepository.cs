@@ -2,6 +2,7 @@
 using PokemonReview.Models.Models;
 using PokemonReview.DataAccess.Repository.IRepository;
 using PokemonReview.DataAccess.Data;
+using PokemonReview.Models.CreateDto;
 
 namespace PokemonReview.DataAccess.Repository
 {
@@ -16,7 +17,7 @@ namespace PokemonReview.DataAccess.Repository
 
 		async public Task<bool> Exists(int pokemonId)
 		{
-			return await _db.Pokemons.FirstOrDefaultAsync(pokemon => pokemon.Id == pokemonId) is not null;
+			return await _db.Pokemons.AsNoTracking().FirstOrDefaultAsync(pokemon => pokemon.Id == pokemonId) is not null;
 		}
 
 		public double GetRating(int pokemonId)
@@ -28,10 +29,19 @@ namespace PokemonReview.DataAccess.Repository
 			}
 			return reviews.Average(review => review.Rating);
 		}
-			
-		public void Update(Pokemon pokemon)
+
+        public async Task InsertPokemon(int ownerId, int categoryId, Pokemon pokemon)
+        {
+			Owner? owner = await _db.Owners.FirstOrDefaultAsync(o => o.Id == ownerId);
+			Category? category = await  _db.Categories.FirstOrDefaultAsync(c => c.Id == categoryId);
+			await _db.PokemonOwners.AddAsync(new PokemonOwner { Owner = owner, Pokemon = pokemon});
+			await _db.PokemonCategories.AddAsync(new PokemonCategory { Category = category, Pokemon = pokemon});
+			await _db.Pokemons.AddAsync(pokemon);
+        }
+
+        public void Update(Pokemon pokemon)
 		{
 			_db.Pokemons.Update(pokemon);
 		}
-	}
+    }
 }

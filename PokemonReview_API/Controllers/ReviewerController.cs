@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PokemonReview.DataAccess.Repository.IRepository;
 using PokemonReview.Models.Dto;
+using PokemonReview.Models.Models;
 
 namespace PokemonReview_API.Controllers
 {
@@ -62,6 +63,29 @@ namespace PokemonReview_API.Controllers
 				return BadRequest(ModelState);
 			}
 			return Ok(reviews);
+		}
+		[HttpPost]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		public async Task<IActionResult> Create([FromBody] ReviewerDto reviewer) 
+		{
+			if (reviewer is null)
+			{
+				return BadRequest(ModelState);
+			}
+			Reviewer? duplicate = await _unitOfWork.ReviewerRepo.GetAsync(r => r.LastName == reviewer.LastName);
+			if (duplicate is not null) 
+			{
+				ModelState.AddModelError("","Entity already exists!");
+			}
+			if (!ModelState.IsValid)
+			{
+				return BadRequest();
+			}
+			Reviewer mappedReviewer = _mapper.Map<Reviewer>(reviewer);
+			await _unitOfWork.ReviewerRepo.InsertAsync(mappedReviewer);
+			await _unitOfWork.Save();
+			return NoContent();
 		}
 	}
 }

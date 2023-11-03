@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PokemonReview.DataAccess.Repository.IRepository;
+using PokemonReview.Models.CreateDto;
 using PokemonReview.Models.Dto;
 using PokemonReview.Models.Models;
 using System.Collections;
@@ -72,6 +73,54 @@ namespace PokemonReview_API.Controllers
 				return BadRequest();
 			}
 			return Ok(pokemons);
+		}
+		[HttpPost]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		public async Task<IActionResult> Create([FromBody] OwnerCreateDto owner)
+		{
+			if (owner is null) 
+			{
+				return BadRequest(ModelState);
+			}
+			Owner? duplicate = await _unitOfWork.OwnerRepo.GetAsync(o => o.LastName.Trim().ToLower() == owner.LastName.Trim().ToLower()); 
+			if (duplicate is not null) 
+			{
+				ModelState.AddModelError("", "Entity already exists!");
+				return BadRequest(ModelState);
+			}
+			if (!ModelState.IsValid) 
+			{
+				return BadRequest(ModelState);
+			}
+			Owner mappedOwner = _mapper.Map<Owner>(owner);
+			await _unitOfWork.OwnerRepo.InsertAsync(mappedOwner);
+			await _unitOfWork.Save();
+			return NoContent();
+		}
+		[HttpPut("{id:int}")]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		public async Task<IActionResult> Update(int id, [FromQuery] int countryId, [FromBody] OwnerDto owner) 
+		{
+			if (owner is null || owner.Id != id) 
+			{
+				return BadRequest(ModelState);
+			}
+			if (!await _unitOfWork.OwnerRepo.Exists(id)) 
+			{
+				return NotFound();
+			}
+			if (!ModelState.IsValid) 
+			{
+				return BadRequest();
+			}
+			Owner mappedOwner = _mapper.Map<Owner>(owner);
+			mappedOwner.CountryId = countryId;	
+			_unitOfWork.OwnerRepo.Update(mappedOwner);
+			await _unitOfWork.Save();
+			return NoContent();
 		}
 	}
 }

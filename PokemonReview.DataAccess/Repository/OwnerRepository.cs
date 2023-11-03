@@ -15,7 +15,7 @@ namespace PokemonReview.DataAccess.Repository
         }
         async public Task<bool> Exists(int ownerId)
 		{
-			return await _db.Owners.FirstOrDefaultAsync(owner => owner.Id == ownerId) is not null;
+			return await _db.Owners.AsNoTracking().FirstOrDefaultAsync(owner => owner.Id == ownerId) is not null;
 		}
 
 		async public Task<Country?> GetCountry(int ownerId)

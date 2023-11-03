@@ -14,7 +14,7 @@ namespace PokemonReview.DataAccess.Repository
         }
         async public Task<bool> Exists(int categoryId)
 		{
-			return await _db.Categories.FirstOrDefaultAsync(category => category.Id == categoryId) is not null;
+			return await _db.Categories.AsNoTracking().FirstOrDefaultAsync(category => category.Id == categoryId) is not null;
 		}
 
 		async public Task<IEnumerable<Pokemon>?> GetPokemons(int categoryId)
