@@ -89,5 +89,25 @@ namespace PokemonReview_API.Controllers
 			await _unitOfWork.Save();
 			return NoContent();
 		}
-	}
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (!await _unitOfWork.PokemonRepo.Exists(id))
+            {
+                return NotFound();
+            }
+			_unitOfWork.ReviewRepo.RemoveRange(await _unitOfWork.ReviewRepo.GetAllAsync(r => r.PokemonId == id));
+            Pokemon pokemon = (await _unitOfWork.PokemonRepo.GetAsync(p => p.Id == id))!;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _unitOfWork.PokemonRepo.Remove(pokemon);
+            await _unitOfWork.Save();
+            return NoContent();
+        }
+    }
 }

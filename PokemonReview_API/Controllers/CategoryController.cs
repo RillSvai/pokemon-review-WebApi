@@ -109,6 +109,26 @@ namespace PokemonReview_API.Controllers
 			await _unitOfWork.Save();
 			return NoContent();
 		}
+		[HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Remove(int id)
+		{
+			if (!await _unitOfWork.CategoryRepo.Exists(id)) 
+			{
+				return NotFound(ModelState);
+			}
+			Category category = (await _unitOfWork.CategoryRepo.GetAsync(c => c.Id == id))!;
+			if (!ModelState.IsValid) 
+			{
+				return BadRequest(ModelState);
+			}
+			_unitOfWork.CategoryRepo.Remove(category);
+			await _unitOfWork.Save();
+			return NoContent();
+		}
+
 
 	}
 }

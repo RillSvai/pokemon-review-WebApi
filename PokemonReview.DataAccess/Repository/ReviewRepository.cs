@@ -27,7 +27,12 @@ namespace PokemonReview.DataAccess.Repository
 			return await _db.Reviewers.FirstOrDefaultAsync(reviewer => reviewer.Reviews.Any(review => review.Id == reviewId));
 		}
 
-		public void Update(Review review)
+        public void RemoveRange(IEnumerable<Review> reviews)
+        {
+			_db.Reviews.RemoveRange(reviews.ToList());
+        }
+
+        public void Update(Review review)
 		{
 			_db.Reviews.Update(review);
 		}
