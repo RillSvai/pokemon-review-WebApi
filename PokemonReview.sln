@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokemonReview.DataAccess", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokemonReview.Utility", "PokemonReview.Utility\PokemonReview.Utility.csproj", "{A8672456-C73A-430A-A89A-8879B2EFF827}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonReview_API.Tests", "PokemonReview_API.Tests\PokemonReview_API.Tests.csproj", "{23B2C7D9-DC96-434B-9439-984D640B3F8F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A8672456-C73A-430A-A89A-8879B2EFF827}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8672456-C73A-430A-A89A-8879B2EFF827}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8672456-C73A-430A-A89A-8879B2EFF827}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23B2C7D9-DC96-434B-9439-984D640B3F8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23B2C7D9-DC96-434B-9439-984D640B3F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23B2C7D9-DC96-434B-9439-984D640B3F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23B2C7D9-DC96-434B-9439-984D640B3F8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

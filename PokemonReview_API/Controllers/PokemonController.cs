@@ -52,7 +52,7 @@ namespace PokemonReview_API.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(double))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<IActionResult> GetRating(int id) 
+		public async Task<IActionResult> GetRating(int id, [FromQuery] DateTime? date) 
 		{
 			if (!await _unitOfWork.PokemonRepo.Exists(id)) 
 			{
